@@ -16,4 +16,3 @@
 .DS_Store
 .rspec-tm
 bundle_stubs/
-*.lock
