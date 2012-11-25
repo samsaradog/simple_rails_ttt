@@ -1,0 +1,21 @@
+<div class="center hero-unit">
+  <h2>Can you beat the computer?</h2>
+  <h3><%= @notification %></h3>
+
+  <div id="box_center" class="btn-group btn-group-vertical">
+	<% @condition.keys.each_slice(3) do |moves| %>
+	<div id="button" class="btn-group">
+		<% moves.each do |move| %>
+		<%= link_to @condition[move], move_path(move: move), 
+		      class: "btn btn-large", id: "button_size" %>
+		<% end %>
+    </div>
+	<% end %>
+  </div>
+
+  <%= link_to "New Game", new_game_path, class: "btn btn-success" %>
+  <!-- <%= link_to "Exit Game", '#', class: "btn btn-danger" %> -->
+</div>
+
+<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+

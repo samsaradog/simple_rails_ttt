@@ -1,4 +1,8 @@
 TicTacToe::Application.routes.draw do
+  root to: 'tic_tac_toe#home'
+  get 'move'     => 'tic_tac_toe#move'
+  get 'new_game' => 'tic_tac_toe#new_game'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
