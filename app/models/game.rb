@@ -17,7 +17,7 @@ class Game
   
   def add_human_move(move)
     if available(move)
-      add_move(O_TOKEN,move)
+      add_move(O_TOKEN,move) if ( :open == state )
       add_move(X_TOKEN,generate_x_move) if ( :open == state )
     end
   end
