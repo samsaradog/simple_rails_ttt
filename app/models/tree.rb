@@ -17,14 +17,20 @@ class TreeNode
     @value = get_limit_value
     next_move = nil 
     
+    move_to_node = {}
+    
     available_moves.each do | current_group |
       next_move = current_group.shuffle[0]
       node = new_child_node(root.dup.add!(token,next_move),min,max)
+      move_to_node[next_move] = node
+      
       ( @value = node.value and @move = next_move ) if need_to_change_value?(node)
       ( (@value = pruning_value) and break ) if value_at_limit?
     end
     
     @move = next_move unless (@move)
+    puts move_to_node.inspect
+    puts self.inspect
   end
   
 end
