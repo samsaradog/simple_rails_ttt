@@ -29,8 +29,8 @@ class TreeNode
     end
     
     @move = next_move unless (@move)
-    puts move_to_node.inspect
-    puts self.inspect
+    # puts move_to_node.inspect
+    # puts self.inspect
   end
   
 end

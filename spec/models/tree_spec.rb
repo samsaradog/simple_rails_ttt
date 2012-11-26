@@ -365,15 +365,15 @@ describe "Tree" do
     # ----------
     #    |   |  
     # ----------
-    #   |   | O
+    #    |   | O
 
     before(:each) do
       [4].each { | pos | @grid.add!(O_TOKEN,pos)}
       @node = MaxNode.new(@grid)
     end
 
-    it "should not have the value 5" do
-      @node.value.should_not == 5
+    it "should have the value 8" do
+      @node.value.should == 8
     end
 
   end
