@@ -4,9 +4,10 @@ CENTER_POSITION = 8
 OUTSIDE_SIZE    = 8
 
 class Grid
-  attr_reader :center, :outside
+  attr_reader :center, :outside, :state
   
-  def initialize
+  def initialize(new_state = :open)
+    @state = new_state
     @outside = {}
     (0..7).to_a.each { |x| @outside[x] = Z_TOKEN }
     @center = { CENTER_POSITION => Z_TOKEN }
@@ -21,11 +22,12 @@ class Grid
     else
       @outside[position] = token
     end
+    @state = update_state
     self
   end
   
   def dup
-    return_value = Grid.new
+    return_value = Grid.new(state)
     return_value.center.merge!(center)
     return_value.outside.merge!(outside)
     return_value
@@ -67,7 +69,7 @@ class Grid
     :draw == state
   end
   
-  def state
+  def update_state
     return :x_win if has_winner?(X_TOKEN)
     return :o_win if has_winner?(O_TOKEN)
     return :draw  if grid_full?

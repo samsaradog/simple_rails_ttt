@@ -12,25 +12,33 @@ class TreeNode
   end
   
   def minimax()
-    available_moves = root.group_moves(token)
-    
     @value = get_limit_value
-    next_move = nil 
     
     move_to_node = {}
     
-    available_moves.each do | current_group |
-      next_move = current_group.shuffle[0]
+    root.available.each do | next_move |
       node = new_child_node(root.dup.add!(token,next_move),min,max)
       move_to_node[next_move] = node
       
-      ( @value = node.value and @move = next_move ) if need_to_change_value?(node)
+      ( @value = node.value ) if need_to_change_value?(node)
       ( (@value = pruning_value) and break ) if value_at_limit?
     end
     
-    @move = next_move unless (@move)
-    # puts move_to_node.inspect
-    # puts self.inspect
+    @move = best_move(move_to_node)
+  end
+  
+  def best_move(move_to_node)
+    best_value = best_move_value
+    return_move = move_to_node.keys[0]
+    
+    move_to_node.each do |move,node|
+      return move if ( winning_state == node.root.state )
+      if node_value_better?(node.value,best_value)
+        return_move = move
+        best_value = node.value
+      end
+    end
+    return_move
   end
   
 end
@@ -62,7 +70,19 @@ class MinNode < TreeNode
   end
   
   def value_at_limit?
-    value <= min
+    value < min
+  end
+  
+  def best_move_value
+    STATE_TO_VALUE[:x_win]
+  end
+  
+  def winning_state
+    :o_win
+  end
+  
+  def node_value_better?(node_value, best_value)
+    (node_value < best_value)
   end
   
 end
@@ -94,7 +114,19 @@ class MaxNode < TreeNode
   end
   
   def value_at_limit?
-    value >= max
+    value > max
+  end
+  
+  def best_move_value
+    STATE_TO_VALUE[:o_win]
+  end
+  
+  def winning_state
+    :x_win
+  end
+  
+  def node_value_better?(node_value, best_value)
+    (node_value > best_value)
   end
   
 end
