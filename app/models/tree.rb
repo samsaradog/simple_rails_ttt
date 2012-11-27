@@ -15,7 +15,7 @@ class TreeNode
   def minimax()
     @value = get_limit_value
         
-    root.available.each do | next_move |
+    root.available.shuffle.each do | next_move |
       node = new_child_node(root.dup.add!(token,next_move),min,max,(depth+1))
       @move_to_node[next_move] = node
       
