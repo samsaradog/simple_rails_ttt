@@ -1,11 +1,13 @@
 require "spec_helper"
 require "grid"
 require "tree"
+# require "ruby-prof"
 
 X_DRAW_MOVES = [1,2,4,5,7]
 O_DRAW_MOVES = [0,3,6,8]
 
 describe "Tree" do
+  
   before(:each) do
     @grid = Grid.new
   end
@@ -38,7 +40,7 @@ describe "Tree" do
     end
     
     it "should have an empty move" do
-      @node.move.should be_false
+      @node.best_move.should be_false
     end
   end
   
@@ -53,7 +55,7 @@ describe "Tree" do
     end
     
     it "should have an empty move" do
-      @node.move.should be_false
+      @node.best_move.should be_false
     end
   end
   
@@ -75,7 +77,7 @@ describe "Tree" do
     end
     
     it "should have the move 6" do
-      @node.move.should == 6
+      @node.best_move.should == 6
     end
      
   end
@@ -98,7 +100,7 @@ describe "Tree" do
     end
     
     it "should have the move 6" do
-      @node.move.should == 6
+      @node.best_move.should == 6
     end
      
   end
@@ -121,7 +123,7 @@ describe "Tree" do
     end
     
     it "should have the move 0 or 2" do
-      result = (@node.move == 0 or @node.move == 2)
+      result = (@node.best_move == 0 or @node.best_move == 2)
       result.should be_true
     end
     
@@ -145,7 +147,7 @@ describe "Tree" do
     end
     
     it "should have the move 0 or 2" do
-      result = (@node.move == 0 or @node.move == 2)
+      result = (@node.best_move == 0 or @node.best_move == 2)
       result.should be_true
     end
     
@@ -169,7 +171,7 @@ describe "Tree" do
     end
     
     it "should have the move 3" do
-      @node.move.should == 3
+      @node.best_move.should == 3
     end
     
   end
@@ -192,7 +194,7 @@ describe "Tree" do
     end
     
     it "should have the move 0" do
-      @node.move.should == 0
+      @node.best_move.should == 0
     end
     
   end
@@ -215,7 +217,7 @@ describe "Tree" do
     end
     
     it "should have the move 3" do
-      @node.move.should == 3
+      @node.best_move.should == 3
     end
     
   end
@@ -261,7 +263,7 @@ describe "Tree" do
     end
     
     it "should have the move 5" do
-      @node.move.should == 5
+      @node.best_move.should == 5
     end
     
   end
@@ -280,7 +282,7 @@ describe "Tree" do
     end
     
     it "should have the move 7" do
-      @node.move.should == 7
+      @node.best_move.should == 7
     end
     
     it "should have the value 0" do
@@ -374,7 +376,7 @@ describe "Tree" do
     end
   
     it "should have the move 8" do
-      @node.move.should == 8
+      @node.best_move.should == 8
     end
   
   end
@@ -385,17 +387,17 @@ describe "Tree" do
     #    |   | O
     # ----------
     #  X |   | O
-
+  
     before(:each) do
       [3,4].each { | pos | @grid.add!(O_TOKEN,pos)}
       [0,6].each { | pos | @grid.add!(X_TOKEN,pos)}
       @node = MaxNode.new(@grid)
     end
-
+  
     it "should have the move 7" do
-      @node.move.should == 7
+      @node.best_move.should == 7
     end
-
+  
   end
 
 end

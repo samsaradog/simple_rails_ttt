@@ -8,9 +8,8 @@ class Grid
   
   def initialize(new_state = :open)
     @state = new_state
-    @outside = {}
-    (0..7).to_a.each { |x| @outside[x] = Z_TOKEN }
-    @center = { CENTER_POSITION => Z_TOKEN }
+    @outside = Z_TOKEN * 8
+    @center  = Z_TOKEN
   end
   
   def add!(token,position)
@@ -18,7 +17,7 @@ class Grid
     raise RuntimeError unless ( 0 != available.count(position))
     
     if ( CENTER_POSITION == position )
-      @center[position] = token
+      @center = token
     else
       @outside[position] = token
     end
@@ -26,10 +25,18 @@ class Grid
     self
   end
   
+  def center=(value)
+    @center = value
+  end
+  
+  def outside=(value)
+    @outside = value
+  end
+  
   def dup
     return_value = Grid.new(state)
-    return_value.center.merge!(center)
-    return_value.outside.merge!(outside)
+    return_value.center  = center
+    return_value.outside = outside.dup
     return_value
   end
   
@@ -37,28 +44,12 @@ class Grid
     ( center == other.center ) && ( outside == other.outside )
   end
   
-  def match?(other) 
-    return false if center != other.center
-    
-    (1..3).each do |x|
-      rotated = rotate(other.outside, x)
-      return true if ( rotated == outside )
-    end
-    false
-  end
-  
-  def rotate(moves,count) 
-    return_value = {}
-    moves.each { |k,v| return_value[(k+(count*2)) % OUTSIDE_SIZE] = v }
-    return_value
-  end
-  
   def in_range?(position)
     position.to_s =~ /[0-8]/
   end
   
   def grid_full?
-    available.empty?
+    (center != Z_TOKEN) && (!outside.include?(Z_TOKEN))
   end
   
   def available
@@ -81,32 +72,13 @@ class Grid
   end
   
   def find_moves(token)
-    h = @outside.merge(center)
-    h.select { |k,v| token == v }.keys
-  end
-  
-  def group_moves(token)
-    buckets = []
-    
-    available.each do |move|
-      new_grid = self.dup.add!(token,move)
-      buckets << [move] unless updated_buckets?(token,new_grid,move,buckets)
+    return_value = []
+    i = 0
+    outside.chars do |c|
+      return_value << i if ( token == c )
+      i += 1
     end
-    
-    buckets.shuffle
-  end
-  
-  def updated_buckets?(token,new_grid,move,buckets) #transparent
-    return_value = false
-    
-    buckets.each do |bucket|
-      if new_grid.match?(self.dup.add!(token,bucket[0]))
-        bucket << move
-        return_value = true
-        break
-      end
-    end
-    
+    return_value << CENTER_POSITION if token == center
     return_value
   end
   

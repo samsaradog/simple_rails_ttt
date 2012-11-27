@@ -4,7 +4,7 @@ class Game
   attr_reader :memento
   
   def initialize(memento = INITIAL_MEMENTO)
-    set_memento(memento)
+    self.memento = memento
     set_board
   end
   
@@ -15,14 +15,18 @@ class Game
     self
   end
   
+  def can_still_make_moves?
+    return :open == state
+  end
+  
   def add_human_move(move)
-    if available(move)
-      add_move(O_TOKEN,move) if ( :open == state )
-      add_move(X_TOKEN,generate_x_move) if ( :open == state )
+    if available?(move)
+      add_move(O_TOKEN,move) if can_still_make_moves?
+      add_move(X_TOKEN,generate_x_move) if can_still_make_moves?
     end
   end
   
-  def available(move)
+  def available?(move)
     result = []
     (0..8).each { |x| result << x.to_s if ( " " == @memento[x] ) }
     result.include?(move)
@@ -43,12 +47,8 @@ class Game
     return_value
   end
   
-  def set_memento(memento)
-    if memento
-      @memento = memento.dup
-    else
-      @memento = INITIAL_MEMENTO
-    end
+  def memento=(memento)
+    @memento = memento.try(:dup) || INITIAL_MEMENTO
   end
   
   def set_board

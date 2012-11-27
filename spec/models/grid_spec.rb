@@ -82,46 +82,6 @@ describe "Grid" do
     
   end
   
-  context "recognizes matching grids" do
-    
-    before(:each) do
-      (0..2).each { |x| @grid.add!(X_TOKEN,x) }
-      @another_grid = Grid.new
-    end
-    
-    it "recognizes a three position rotation" do
-      (2..4).each { |x| @another_grid.add!(X_TOKEN,x) }
-      @grid.match?(@another_grid).should == true
-    end
-    
-    it "recognizes a two position rotation" do
-      (4..6).each { |x| @another_grid.add!(X_TOKEN,x) }
-      @grid.match?(@another_grid).should == true
-    end
-    
-    it "recognizes grids that don't match" do
-      (5..7).each { |x| @another_grid.add!(X_TOKEN,x) }
-      @grid.match?(@another_grid).should == false
-    end
-    
-    it "rotates correctly" do
-      (0..2).each { |x| @another_grid.add!(X_TOKEN,x) }
-      outside = @another_grid.rotate(@another_grid.outside,2)
-      outside.should_not == @grid.outside
-      outside = @another_grid.rotate(outside,2)
-      outside.should == @grid.outside
-    end
-    
-  end
-  
-  it "groups moves correctly" do
-    grouped_moves = @grid.group_moves(X_TOKEN)
-    grouped_moves.include?([0,2,4,6]).should == true
-    grouped_moves.include?([1,3,5,7]).should == true
-    grouped_moves.include?([8]).should == true
-    grouped_moves.flatten.sort.should == grouped_moves.flatten.sort.uniq
-  end
-  
   it "duplicates correctly" do
     another_grid = @grid.dup
     another_grid.add!(X_TOKEN,0)

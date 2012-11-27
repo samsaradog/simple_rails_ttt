@@ -11,6 +11,7 @@ gem 'jquery-rails', '2.0.2'
 group :development, :test do
   gem 'sqlite3', '1.3.5'
   gem 'rspec-rails', '2.11.0'
+  gem 'ruby-prof', '0.11.2'
   gem 'guard-rspec', '1.2.1'
   # gem 'ruby_gntp', '0.3.4'
   gem 'terminal-notifier-guard'
