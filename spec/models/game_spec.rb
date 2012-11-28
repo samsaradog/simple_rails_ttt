@@ -9,18 +9,20 @@ describe "Game with no initial state" do
   it { should respond_to(:memento)}
   it { should respond_to(:add_move)}
   it { should respond_to(:notification)}
-  it { should respond_to(:condition)}
+  it { should respond_to(:representation)}
   
   context "when possibly adding the first computer move" do
 
     it "doesn't change when the human goes first" do
       @game.stub(:computer_first?).and_return(false)
-      @game.add_first_move.memento.should == INITIAL_MEMENTO
+      @game.add_first_move
+      @game.memento.should == INITIAL_MEMENTO
     end
     
     it "changes when the computer goes first" do
       @game.stub(:computer_first?).and_return(true)
-      @game.add_first_move.memento.should_not == INITIAL_MEMENTO
+      @game.add_first_move
+      @game.memento.should_not == INITIAL_MEMENTO
     end
   end
   

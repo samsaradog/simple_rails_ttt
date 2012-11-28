@@ -4,8 +4,8 @@ class TicTacToeController < ApplicationController
     current_game = Game.new(get_cookie_value)
     current_game.add_first_move
     set_cookie_value(current_game.memento)
-    @notification = current_game.notification
-    @condition    = current_game.condition
+    @notification   = current_game.notification
+    @representation = current_game.representation
   end
   
   def move

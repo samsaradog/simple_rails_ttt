@@ -1,7 +1,6 @@
 require "spec_helper"
 require "grid"
 require "tree"
-# require "ruby-prof"
 
 X_DRAW_MOVES = [1,2,4,5,7]
 O_DRAW_MOVES = [0,3,6,8]

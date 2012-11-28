@@ -38,27 +38,27 @@ describe "Board" do
     @board.generate_x_move.should match(/[0-8]/)
   end
   
-  context "generating the right condition" do
-    def adjust_board_and_condition(board,condition,token,index)
+  context "generating the right memento" do
+    def adjust_board_and_memento(board,memento,token,index)
       board.add!(token,index.to_s)
-      condition[index] = token
+      memento[index] = token
     end
     
-    it "shows the initial condition" do
-      @board.condition.should == INITIAL_MEMENTO
+    it "shows the initial memento" do
+      @board.memento.should == INITIAL_MEMENTO
     end
     
-    it "shows the condition correctly after some moves" do
-      test_condition = INITIAL_MEMENTO.dup
-      [0,3].each { |x| adjust_board_and_condition(@board,test_condition,X_TOKEN,x) }
-      [1,6].each { |x| adjust_board_and_condition(@board,test_condition,O_TOKEN,x) }
-      @board.condition.should == test_condition
+    it "shows the memento correctly after some moves" do
+      test_memento = INITIAL_MEMENTO.dup
+      [0,3].each { |x| adjust_board_and_memento(@board,test_memento,X_TOKEN,x) }
+      [1,6].each { |x| adjust_board_and_memento(@board,test_memento,O_TOKEN,x) }
+      @board.memento.should == test_memento
     end
     
-    it "adds moves correctly from a given condition" do
-      test_condition = "X  OX  OX"
-      @board.add_memento(test_condition)
-      @board.condition.should == test_condition
+    it "adds moves correctly from a given memento" do
+      test_memento = "X  OX  OX"
+      @board.recreate_board(test_memento)
+      @board.memento.should == test_memento
     end
   end
 end

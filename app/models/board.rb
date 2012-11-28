@@ -10,41 +10,26 @@ BOARD_TO_GRID = {  "0" => 0, "1" => 1, "2" => 2,
 GRID_TO_BOARD = BOARD_TO_GRID.invert
 
 class Board
-  attr_reader :state
+  attr_reader :memento
   
   def initialize
     @grid  = Grid.new
-    @state = :open
+    @memento = INITIAL_MEMENTO.dup
   end
   
   def add!(token,position)
     grid_position = BOARD_TO_GRID[position]
     @grid.add!(token,grid_position)
-
-    @state = grid_state
+    @memento[position.to_i] = token
   end
   
-  def condition
-    return_value = INITIAL_MEMENTO.dup
-    
-    [X_TOKEN,O_TOKEN].each do |token|
-      grid_moves = @grid.find_moves(token)
-      grid_moves.each do |grid_move|
-        translated_move = GRID_TO_BOARD[grid_move]
-        return_value[translated_move.to_i] = token
-      end
-    end
-    
-    return_value
-  end
-  
-  def add_memento(memento)
+  def recreate_board(memento)
     (0..8).each do |position|
       add!(memento[position], position.to_s) if ( " " != memento[position])
     end
   end
   
-  def grid_state
+  def state
     @grid.state
   end
   

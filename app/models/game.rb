@@ -5,14 +5,13 @@ class Game
   
   def initialize(memento = INITIAL_MEMENTO)
     self.memento = memento
-    set_board
+    set_up_board
   end
   
   def add_first_move
-    if ( ( INITIAL_MEMENTO == @memento ) and computer_first? )
+    if ( ( INITIAL_MEMENTO == memento ) and computer_first? )
       add_move(X_TOKEN,generate_x_move)
     end
-    self
   end
   
   def can_still_make_moves?
@@ -21,27 +20,25 @@ class Game
   
   def add_human_move(move)
     if available?(move)
-      add_move(O_TOKEN,move) if can_still_make_moves?
+      add_move(O_TOKEN,move)            if can_still_make_moves?
       add_move(X_TOKEN,generate_x_move) if can_still_make_moves?
     end
   end
   
   def available?(move)
-    result = []
-    (0..8).each { |x| result << x.to_s if ( " " == @memento[x] ) }
-    result.include?(move)
+    ! memento[move.to_i].presence
   end
   
   def add_move(token,move)
     @board.add!(token,move)
-    @memento = @board.condition
+    self.memento = @board.memento
   end
   
   def notification
     STATE_TO_NOTIFICATION[state]
   end
   
-  def condition
+  def representation
     return_value = {}
     (0..8).each { |n| return_value[n] = @memento[n] }
     return_value
@@ -51,9 +48,9 @@ class Game
     @memento = memento.try(:dup) || INITIAL_MEMENTO
   end
   
-  def set_board
+  def set_up_board
     @board = Board.new
-    @board.add_memento(@memento)
+    @board.recreate_board(memento)
   end
   
   def generate_x_move
