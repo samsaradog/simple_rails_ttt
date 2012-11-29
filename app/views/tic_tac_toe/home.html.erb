@@ -1,21 +1,55 @@
+<%= javascript_tag do %>
+$(document).ready(function() {
+
+    $(".remote").bind('ajax:before', function() {
+	  $("#spinner").show();
+    });
+	
+	$(".remote").bind('ajax:complete', function(evt, data, status, xhr) {
+	  $("#spinner").hide();
+	  update_buttons(jQuery.parseJSON(data.responseText).representation);
+	  update_notification(jQuery.parseJSON(data.responseText).notification);
+	});
+	
+	function update_buttons(representation) {
+		var name = "move"
+		for (i = 0; i < 9; i++)
+		{
+			var button_name = name+i;
+			document.getElementById(button_name).innerHTML = representation[i];
+		}
+	};
+	
+	function update_notification(notification) {
+		document.getElementById("notification").innerHTML = notification;
+	};
+	
+});
+
+<% end %>
+
 <div class="center hero-unit">
   <h2>Can you beat the computer?</h2>
-  <h3><%= @notification %></h3>
+  <h3 id="notification"><%=@notification%></h3>
 
   <div id="box_center" class="btn-group btn-group-vertical">
 	<% @representation.keys.each_slice(3) do |moves| %>
 	<div id="button" class="btn-group">
 		<% moves.each do |move| %>
 		<%= link_to @representation[move], move_path(move: move), 
-		      class: "btn btn-large", id: "button_size" %>
+			      class: "btn btn-large move_button remote", id: "move#{move}",
+				  remote: true 
+				%>
 		<% end %>
     </div>
 	<% end %>
   </div>
 
-  <%= link_to "New Game", new_game_path, class: "btn btn-success" %>
-  <!-- <%= link_to "Exit Game", '#', class: "btn btn-danger" %> -->
+  <%= link_to "New Game", new_game_path, class: "btn btn-success remote", 
+              id: "new_game", :disable_with => "待って下さい", remote: true %>
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+
+<%= image_tag "328.gif", id: "spinner" %>
 
