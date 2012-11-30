@@ -11,15 +11,13 @@ class TicTacToeController < ApplicationController
     current_game.add_human_move(params[:move])
     set_cookie_value(current_game.memento)
     create_return(current_game)
-    # redirect_to :root
   end
   
-  def new_game # used for new game button
+  def new_game
     current_game = Game.new
     current_game.add_first_move
     set_cookie_value(current_game.memento)
     create_return(current_game)
-    # redirect_to :root
   end
   
   def set_cookie_value(cookie_value)
