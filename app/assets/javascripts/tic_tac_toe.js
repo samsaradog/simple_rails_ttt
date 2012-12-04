@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	
     $(".remote").bind('ajax:before', function() {
 	  $("#spinner").show();
     });
@@ -17,5 +17,5 @@ $(document).ready(function() {
 	function update_notification(notification) {
 		$("#notification").text(notification)
 	};
-
+	
 });

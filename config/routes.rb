@@ -1,7 +1,15 @@
 TicTacToe::Application.routes.draw do
   root to: 'tic_tac_toe#home'
-  get 'move'     => 'tic_tac_toe#move'
-  get 'new_game' => 'tic_tac_toe#new_game'
+  
+  match 'human_move'        => 'tic_tac_toe#human_move'
+  match 'player_move'       => 'tic_tac_toe#player_move'
+  match 'new_computer_game' => 'tic_tac_toe#new_computer_game'
+  match 'computer_game'     => 'tic_tac_toe#computer_game'
+  match 'human_game'        => 'tic_tac_toe#human_game'
+  match 'new_human_game'    => 'tic_tac_toe#new_human_game'
+  match 'get_update'        => 'tic_tac_toe#get_update'
+  match 'kegjkbf'        => 'tic_tac_toe#human_game', :defaults => { :player => 'X'}
+  match 'wpmiwke'        => 'tic_tac_toe#human_game', :defaults => { :player => 'O'}
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

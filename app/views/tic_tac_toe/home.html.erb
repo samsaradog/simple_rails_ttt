@@ -1,24 +1,13 @@
-<%= image_tag "328a.gif", id: "spinner" %>
-
 <div class="center hero-unit">
-  <h2>Can you beat the computer?</h2>
-  <h3 id="notification"><%=@notification%></h3>
+  <h2>Welcome to Tic-Tac-Toe!</h2>
 
   <div id="box_center" class="btn-group btn-group-vertical">
-	<% @representation.keys.each_slice(3) do |moves| %>
-	<div id="button" class="btn-group">
-		<% moves.each do |move| %>
-		<%= link_to @representation[move], move_path(move: move), 
-			      class: "btn btn-large move_button remote", id: "move#{move}",
-				  remote: true %>
-		<% end %>
-    </div>
-	<% end %>
+	<%= link_to "Play the Computer", computer_game_path, 
+		      class: "btn btn-large btn-primary main_button", id: "computer_game" %>
+	<%= link_to "Play another Human", kegjkbf_path, 
+		      class: "btn btn-large btn-primary main_button", id: "computer_game" %>
   </div>
 
-  <%= link_to "New Game", new_game_path, class: "btn btn-success remote", 
-              id: "new_game", :disable_with => "待って下さい", remote: true %>
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
-
