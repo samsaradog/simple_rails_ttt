@@ -1,7 +1,4 @@
 ActionMailer::Base.smtp_settings = {
-  # address: "smtp-server.tampabay.rr.com",
-  # address: "smtp.gmail.com",
-  # user_name: "warnerwt",
   :address              => 'smtp.sendgrid.net',
   :port                 => '587',
   :user_name            => 'shinkyowill',
