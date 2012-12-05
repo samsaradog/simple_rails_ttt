@@ -32,11 +32,11 @@ class TicTacToeController < ApplicationController
   end
   
   def create_return(game)
-    render json: { notification: game.notification,
+    render json: { notification:   game.notification,
                    representation: game.representation }.to_json
   end
   
-  def human_game
+  def two_player_game
     current_record = GameState.first()
     
     unless current_record
@@ -52,17 +52,18 @@ class TicTacToeController < ApplicationController
     @representation = current_game.representation
   end
   
-  def new_human_game
+  def new_two_player_game
     current_record = GameState.first()
     current_record.token = " " * 9
     current_record.player = switch_player(current_record.player)
     current_record.save
-    create_human_return(Game.new(current_record.token),current_record)
+    create_player_return(Game.new(current_record.token),current_record)
   end
   
   def player_move
     current_record = GameState.first()
     current_game = Game.new(current_record.token)
+    
     if ( params[:player] == current_record.player ) and
        ( current_game.can_still_make_moves? ) and
        ( current_game.available?(params[:move]))
@@ -72,10 +73,10 @@ class TicTacToeController < ApplicationController
         current_record.player = switch_player(params[:player])
         current_record.save
     end
-    create_human_return(current_game,current_record)
+    create_player_return(current_game,current_record)
   end
   
-  def create_human_return(game,record)
+  def create_player_return(game,record)
     render json: { notification: create_notification(game,record),
                    representation: game.representation }.to_json
   end
@@ -94,7 +95,7 @@ class TicTacToeController < ApplicationController
   def get_update
     current_record = GameState.first()
     current_game = Game.new(current_record.token)
-    create_human_return(current_game,current_record)
+    create_player_return(current_game,current_record)
   end
   
   def invite

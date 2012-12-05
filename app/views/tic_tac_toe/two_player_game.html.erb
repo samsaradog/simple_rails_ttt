@@ -1,6 +1,6 @@
 <div class="center hero-unit">
   <h2>Which Human Will Win?</h2>
-  <h3 id="human_notification"><%=@notification%></h3>
+  <h3 id="player_notification"><%=@notification%></h3>
 
   <div id="box_center" class="btn-group btn-group-vertical">
 	<% @representation.keys.each_slice(3) do |moves| %>
@@ -8,14 +8,14 @@
 		<% moves.each do |move| %>
 		<%= link_to @representation[move], 
 		          player_move_path(move: move, player: params[:player]), 
-			      class: "btn btn-large move_button update", id: "human_move#{move}",
+			      class: "btn btn-large move_button update", id: "player_move#{move}",
 				  remote: true %>
 		<% end %>
     </div>
 	<% end %>
   </div>
 
-  <%= link_to "New Game", new_human_game_path(player: params[:player]), 
+  <%= link_to "New Game", new_two_player_game_path(player: params[:player]), 
                           class: "btn btn-success update", id: "new_game",
 	                      remote: true %>
 
