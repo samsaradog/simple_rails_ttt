@@ -1,14 +1,15 @@
 TicTacToe::Application.routes.draw do
   root to: 'tic_tac_toe#home'
   
-  match 'computer_game'       => 'tic_tac_toe#computer_game'
+  match 'computer_game'       => 'tic_tac_toe#computer_game', 
+                                 :defaults => { :home_button => true }
   match 'new_computer_game'   => 'tic_tac_toe#new_computer_game'
   match 'human_move'          => 'tic_tac_toe#human_move'
   
   match 'kegjkbf'             => 'tic_tac_toe#two_player_game', 
-                                 :defaults => { :player => 'X'}
+                                 :defaults => { :player => 'X', :home_button => true }
   match 'wpmiwke'             => 'tic_tac_toe#two_player_game', 
-                                 :defaults => { :player => 'O'}
+                                 :defaults => { :player => 'O', :home_button => false }
   match 'new_two_player_game' => 'tic_tac_toe#new_two_player_game'
   match 'player_move'         => 'tic_tac_toe#player_move'
   match 'get_update'          => 'tic_tac_toe#get_update'

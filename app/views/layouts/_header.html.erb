@@ -3,7 +3,9 @@
 		<div class="container">
 			<nav>
 				<ul class="nav pull-right">
-					<li><%= link_to "Home",    root_path %></li>
+					<% if true == params[:home_button] %>
+						<li><%= link_to "Home",    root_path %></li>
+					<% end %>
 				</ul>
 			</nav>
 		</div>
