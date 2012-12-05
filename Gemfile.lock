@@ -183,6 +183,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionmailer (~> 3.2.8)
   annotate (= 2.5.0)
   bcrypt-ruby (= 3.0.1)
   bootstrap-sass (= 2.0.4)

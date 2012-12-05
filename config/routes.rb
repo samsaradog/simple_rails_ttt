@@ -11,6 +11,8 @@ TicTacToe::Application.routes.draw do
   match 'kegjkbf'        => 'tic_tac_toe#human_game', :defaults => { :player => 'X'}
   match 'wpmiwke'        => 'tic_tac_toe#human_game', :defaults => { :player => 'O'}
   
+  match 'invite'         => 'tic_tac_toe#invite'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

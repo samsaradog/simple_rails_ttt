@@ -18,6 +18,24 @@
   <%= link_to "New Game", new_human_game_path(player: params[:player]), 
                           class: "btn btn-success update", id: "new_game",
 	                      remote: true %>
+
+	<% if ( "X" == params[:player] ) %>
+
+		<br /><br />
+	
+		<form accept-charset="UTF-8" action="/invite" class="new_user"
+		      id="new_user" method="post">
+	
+		  <label for="user_email">Email</label>
+		  <input id="user_email" name="address" size="30" type="text" /><br />
+
+		  <input class="btn btn-large btn-primary" name="commit" type="submit" 
+		         value="Invite a Friend to Play!" />
+		</form>
+	
+	<% end %>
+
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
+

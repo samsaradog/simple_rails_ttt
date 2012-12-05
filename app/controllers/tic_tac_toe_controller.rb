@@ -97,4 +97,9 @@ class TicTacToeController < ApplicationController
     create_human_return(current_game,current_record)
   end
   
+  def invite
+    Invite.tic_tac_toe(params[:address],
+    "#{request.protocol}#{request.host_with_port}").deliver
+    redirect_to :back
+  end
 end
