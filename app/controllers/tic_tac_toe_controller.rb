@@ -37,13 +37,9 @@ class TicTacToeController < ApplicationController
   end
   
   def two_player_game
-    current_record = GameState.first()
+    current_record = fetch_first()
     
-    unless current_record
-      current_record = GameState.new()
-      current_record.player = params[:player]
-    end
-    
+    current_record.player = params[:player]
     current_record.token = " " * 9
     current_record.save
     
@@ -52,8 +48,20 @@ class TicTacToeController < ApplicationController
     @representation = current_game.representation
   end
   
-  def new_two_player_game
+  def fetch_first
     current_record = GameState.first()
+    
+    unless current_record
+      current_record = GameState.new()
+      current_record.token = " " * 9
+      current_record.save
+    end
+    
+    current_record
+  end
+  
+  def new_two_player_game
+    current_record = fetch_first()
     current_record.token = " " * 9
     current_record.player = switch_player(current_record.player)
     current_record.save
@@ -61,7 +69,7 @@ class TicTacToeController < ApplicationController
   end
   
   def player_move
-    current_record = GameState.first()
+    current_record = fetch_first()
     current_game = Game.new(current_record.token)
     
     if ( params[:player] == current_record.player ) and
@@ -93,7 +101,7 @@ class TicTacToeController < ApplicationController
   end
   
   def get_update
-    current_record = GameState.first()
+    current_record = fetch_first()
     current_game = Game.new(current_record.token)
     create_player_return(current_game,current_record)
   end
