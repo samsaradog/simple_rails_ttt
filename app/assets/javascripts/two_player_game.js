@@ -20,6 +20,6 @@ $(document).ready(function() {
 		})
 	}
 
-	setInterval(get_update, 1000);
+	//setInterval(get_update, 1000);
 
 });
