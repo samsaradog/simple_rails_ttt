@@ -36,6 +36,9 @@ class TicTacToeController < ApplicationController
                    representation: game.representation }.to_json
   end
   
+  # Above is for the computer vs. human game
+  # Below is for the two-human game
+  
   def initialize_game
     current_record = GameState.new
     current_record.initialize_player
@@ -46,34 +49,29 @@ class TicTacToeController < ApplicationController
   end
   
   def two_player_game
-    record_id = GameState.decode_id(params[:cipher].to_i)
-    current_record = GameState.find("#{record_id}")
+    current_record = fetch_record(params[:cipher].to_i)
     current_game = Game.new(current_record.token)
     
-    @player         = GameState.decode_player(params[:cipher].to_i)
+    @player         = Cipher.decode_player(params[:cipher].to_i)
     @home_button    = X_TOKEN == @player
     @notification   = create_notification(current_game,current_record)
     @representation = current_game.representation
   end
   
   def fetch_record(cipher)
-    GameState.find(GameState.decode_id(cipher.to_i))
-  end
-  
-  def fetch_player(cipher)
-    GameState.decode_player(cipher.to_i)
+    GameState.find(Cipher.decode_id(cipher))
   end
   
   def reset_two_player_game
-    current_record = fetch_record(params[:cipher])
+    current_record = fetch_record(params[:cipher].to_i)
     current_record.reset
     current_record.save
     create_player_return(Game.new(current_record.token),current_record)
   end
   
   def two_player_move
-    current_player = fetch_player(params[:cipher])
-    current_record = fetch_record(params[:cipher])
+    current_player = Cipher.decode_player(params[:cipher].to_i)
+    current_record = fetch_record(params[:cipher].to_i)
     current_game = Game.new(current_record.token)
     
     if ( current_player == current_record.player ) and
@@ -100,13 +98,13 @@ class TicTacToeController < ApplicationController
   end
   
   def get_update
-    current_record = fetch_record(params[:cipher])
+    current_record = fetch_record(params[:cipher].to_i)
     current_game = Game.new(current_record.token)
     create_player_return(current_game,current_record)
   end
   
   def invite
-    new_cipher = GameState.switch_cipher_player(params[:cipher].to_i)
+    new_cipher = Cipher.switch_cipher_player(params[:cipher].to_i)
     Invite.tic_tac_toe(params[:user_email],
     "#{request.protocol}#{request.host_with_port}\/#{new_cipher}").deliver
     redirect_to :back

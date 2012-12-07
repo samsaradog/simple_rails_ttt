@@ -7,16 +7,16 @@ TicTacToe::Application.routes.draw do
                                    :defaults => { :home_button => true }
     match 'new_computer_game'   => :new_computer_game
     match 'human_move'          => :human_move
+    
+    # The above are for the computer vs.human game
+    # The below are for the two human game
   
     match 'reset_two_player_game' => :reset_two_player_game
-
-    match 'get_update'          => :get_update
-  
-    match 'invite/:cipher'         => :invite
+    match 'new_two_player_game'   => :initialize_game
+    match 'two_player_move'       => :two_player_move
     
-    match 'new_two_player_game' => :initialize_game
-
-    match 'two_player_move' => :two_player_move
+    match 'get_update'            => :get_update
+    match 'invite/:cipher'        => :invite
     
     match ':cipher' => :two_player_game
   end

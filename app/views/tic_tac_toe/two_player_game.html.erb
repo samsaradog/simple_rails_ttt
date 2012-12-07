@@ -27,21 +27,12 @@
 		<%= form_tag("/invite/#{params[:cipher]}") do %>
 		
 			<%= label_tag("user_email", "Email")%>
-			<%= text_field_tag("user_email",nil,:size => "30") %>
+			<%= text_field_tag("user_email",nil,:size => "30") %> 
+			<br />
 			<%= submit_tag("Invite a Friend to Play!", :class => "btn btn-large btn-primary" ) %>
 		
 		<% end %>
 		
-		<!-- <form accept-charset="UTF-8" action="/invite" class="new_user"
-		      id="new_user" method="post" >
-	
-		  <label for="user_email">Email</label>
-		  <input id="user_email" name="address" size="30" type="text" /><br />
-
-		  <input class="btn btn-large btn-primary" name="commit" type="submit" 
-		         value="Invite a Friend to Play!" />
-		</form> -->
-	
 	<% end %>
 
 </div>
