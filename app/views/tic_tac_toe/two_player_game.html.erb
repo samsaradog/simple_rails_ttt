@@ -1,5 +1,6 @@
 <div class="center hero-unit">
   <h2>Which Human Will Win?</h2>
+  <h3>You are player <%=@player%></h3><br />
   <h3 id="player_notification"><%=@notification%></h3>
 
   <div id="box_center" class="btn-group btn-group-vertical">
@@ -7,7 +8,7 @@
 	<div id="button" class="btn-group">
 		<% moves.each do |move| %>
 		<%= link_to @representation[move], 
-		          player_move_path(move: move, player: params[:player]), 
+		          two_player_move_path(move: move, cipher: params[:cipher]), 
 			      class: "btn btn-large move_button update", id: "player_move#{move}",
 				  remote: true %>
 		<% end %>
@@ -15,27 +16,39 @@
 	<% end %>
   </div>
 
-  <%= link_to "New Game", new_two_player_game_path(player: params[:player]), 
+  <%= link_to "New Game", reset_two_player_game_path(cipher: params[:cipher]), 
                           class: "btn btn-success update", id: "new_game",
 	                      remote: true %>
 
-	<% if ( "X" == params[:player] ) %>
+	<% if ( "X" == @player ) %>
 
-		<br /><br />
-	
-		<form accept-charset="UTF-8" action="/invite" class="new_user"
-		      id="new_user" method="post">
+	<br /><br />
+
+		<%= form_tag("/invite/#{params[:cipher]}") do %>
+		
+			<%= label_tag("user_email", "Email")%>
+			<%= text_field_tag("user_email",nil,:size => "30") %>
+			<%= submit_tag("Invite a Friend to Play!", :class => "btn btn-large btn-primary" ) %>
+		
+		<% end %>
+		
+		<!-- <form accept-charset="UTF-8" action="/invite" class="new_user"
+		      id="new_user" method="post" >
 	
 		  <label for="user_email">Email</label>
 		  <input id="user_email" name="address" size="30" type="text" /><br />
 
 		  <input class="btn btn-large btn-primary" name="commit" type="submit" 
 		         value="Invite a Friend to Play!" />
-		</form>
+		</form> -->
 	
 	<% end %>
 
 </div>
+
+<script type="text/javascript">
+	<%= "cipher = #{params[:cipher]}" %>
+</script>
 
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
 

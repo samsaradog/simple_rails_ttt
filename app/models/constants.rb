@@ -1,4 +1,4 @@
-INITIAL_MEMENTO = '         '
+INITIAL_MEMENTO = " " * 9
 
 O_TOKEN = "O"
 X_TOKEN = "X"
@@ -20,3 +20,8 @@ STATE_TO_NOTIFICATION = { :draw   => DRAW_GAME_MESSAGE,
                           :open   => OPEN_GAME_MESSAGE,
                           :x_wait => X_MOVE_MESSAGE,
                           :o_wait => O_MOVE_MESSAGE }
+                          
+# Large primes for obfuscating the website for two-player games
+
+X_FACTOR = 817523657
+O_FACTOR = 817523671

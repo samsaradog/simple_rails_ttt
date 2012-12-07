@@ -1,20 +1,25 @@
 TicTacToe::Application.routes.draw do
-  root to: 'tic_tac_toe#home'
   
-  match 'computer_game'       => 'tic_tac_toe#computer_game', 
-                                 :defaults => { :home_button => true }
-  match 'new_computer_game'   => 'tic_tac_toe#new_computer_game'
-  match 'human_move'          => 'tic_tac_toe#human_move'
+  scope :controller => :tic_tac_toe do
+    root to: :home
   
-  match 'kegjkbf'             => 'tic_tac_toe#two_player_game', 
-                                 :defaults => { :player => 'X', :home_button => true }
-  match 'wpmiwke'             => 'tic_tac_toe#two_player_game', 
-                                 :defaults => { :player => 'O', :home_button => false }
-  match 'new_two_player_game' => 'tic_tac_toe#new_two_player_game'
-  match 'player_move'         => 'tic_tac_toe#player_move'
-  match 'get_update'          => 'tic_tac_toe#get_update'
+    match 'computer_game'       => :computer_game, 
+                                   :defaults => { :home_button => true }
+    match 'new_computer_game'   => :new_computer_game
+    match 'human_move'          => :human_move
   
-  match 'invite'         => 'tic_tac_toe#invite'
+    match 'reset_two_player_game' => :reset_two_player_game
+
+    match 'get_update'          => :get_update
+  
+    match 'invite/:cipher'         => :invite
+    
+    match 'new_two_player_game' => :initialize_game
+
+    match 'two_player_move' => :two_player_move
+    
+    match ':cipher' => :two_player_game
+  end
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

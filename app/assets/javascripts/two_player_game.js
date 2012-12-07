@@ -14,7 +14,7 @@ $(document).ready(function() {
 	};
 
 	function get_update() {
-		$.get('/get_update', function(data) {
+		$.get('/get_update', { cipher: cipher }, function(data) {
 		  update_player_buttons(data.representation);
 		  update_player_notification(data.notification);
 		})

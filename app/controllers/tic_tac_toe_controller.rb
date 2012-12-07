@@ -36,49 +36,53 @@ class TicTacToeController < ApplicationController
                    representation: game.representation }.to_json
   end
   
-  def two_player_game
-    current_record = fetch_first()
-    
-    current_record.player = params[:player]
-    current_record.token = " " * 9
+  def initialize_game
+    current_record = GameState.new
+    current_record.initialize_player
+    current_record.reset
     current_record.save
     
+    redirect_to "/#{current_record.cipher(X_TOKEN)}"
+  end
+  
+  def two_player_game
+    record_id = GameState.decode_id(params[:cipher].to_i)
+    current_record = GameState.find("#{record_id}")
     current_game = Game.new(current_record.token)
+    
+    @player         = GameState.decode_player(params[:cipher].to_i)
+    @home_button    = X_TOKEN == @player
     @notification   = create_notification(current_game,current_record)
     @representation = current_game.representation
   end
   
-  def fetch_first
-    current_record = GameState.first()
-    
-    unless current_record
-      current_record = GameState.new()
-      current_record.token = " " * 9
-      current_record.save
-    end
-    
-    current_record
+  def fetch_record(cipher)
+    GameState.find(GameState.decode_id(cipher.to_i))
   end
   
-  def new_two_player_game
-    current_record = fetch_first()
-    current_record.token = " " * 9
-    current_record.player = switch_player(current_record.player)
+  def fetch_player(cipher)
+    GameState.decode_player(cipher.to_i)
+  end
+  
+  def reset_two_player_game
+    current_record = fetch_record(params[:cipher])
+    current_record.reset
     current_record.save
     create_player_return(Game.new(current_record.token),current_record)
   end
   
-  def player_move
-    current_record = fetch_first()
+  def two_player_move
+    current_player = fetch_player(params[:cipher])
+    current_record = fetch_record(params[:cipher])
     current_game = Game.new(current_record.token)
     
-    if ( params[:player] == current_record.player ) and
+    if ( current_player == current_record.player ) and
        ( current_game.can_still_make_moves? ) and
        ( current_game.available?(params[:move]))
        
-        current_game.add_move(params[:player],params[:move])
+        current_game.add_move(current_player,params[:move])
         current_record.token = current_game.memento
-        current_record.player = switch_player(params[:player])
+        current_record.switch_player!
         current_record.save
     end
     create_player_return(current_game,current_record)
@@ -88,12 +92,7 @@ class TicTacToeController < ApplicationController
     render json: { notification: create_notification(game,record),
                    representation: game.representation }.to_json
   end
-  
-  def switch_player(current_player)
-    return "O" if ( "X" == current_player )
-    "X"
-  end
-  
+    
   def create_notification(game,record)
     return game.notification unless game.can_still_make_moves?
     return "Waiting for X move" if "X" == record.player
@@ -101,14 +100,15 @@ class TicTacToeController < ApplicationController
   end
   
   def get_update
-    current_record = fetch_first()
+    current_record = fetch_record(params[:cipher])
     current_game = Game.new(current_record.token)
     create_player_return(current_game,current_record)
   end
   
   def invite
-    Invite.tic_tac_toe(params[:address],
-    "#{request.protocol}#{request.host_with_port}").deliver
+    new_cipher = GameState.switch_cipher_player(params[:cipher].to_i)
+    Invite.tic_tac_toe(params[:user_email],
+    "#{request.protocol}#{request.host_with_port}\/#{new_cipher}").deliver
     redirect_to :back
   end
 end

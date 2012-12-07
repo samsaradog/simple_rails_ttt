@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'constants'
 
 describe "Home Page" do
   it "should have the content Welcome" do
@@ -18,14 +19,4 @@ describe "vs. Computer Page" do
   it "should have a link back to the home page" do
     page.should have_content('Home')
   end
-end
-
-describe "Human Game Page" do
-  
-  before { visit '/kegjkbf'}
-  
-  it "should have the content Which Human" do
-    page.should have_content('Which Human')
-  end
-  
 end
