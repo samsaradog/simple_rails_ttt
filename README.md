@@ -1,3 +1,3 @@
 # Tic-Tac-Toe
 
-Simple Rails application. No database, no user, no scores, no frills.
+Simple Rails application. Gives a player the option of challenging the computer or inviting another human to play.
