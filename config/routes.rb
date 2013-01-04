@@ -1,9 +1,11 @@
 TicTacToe::Application.routes.draw do
   resources :players
+  resources :sessions, only: [:new, :create, :destroy]
   
   root to: 'players#home'
   match '/signup', to: 'players#signup'
-  match '/signin', to: 'players#signin'
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
 
   scope :controller => :tic_tac_toe do
 #    root to: :home
