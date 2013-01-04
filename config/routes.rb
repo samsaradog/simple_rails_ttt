@@ -1,7 +1,12 @@
 TicTacToe::Application.routes.draw do
+  resources :players
   
+  root to: 'players#home'
+  match '/signup', to: 'players#signup'
+  match '/signin', to: 'players#signin'
+
   scope :controller => :tic_tac_toe do
-    root to: :home
+#    root to: :home
   
     match 'computer_game'       => :computer_game, 
                                    :defaults => { :home_button => true }

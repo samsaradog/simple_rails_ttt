@@ -1,0 +1,26 @@
+<h1>Please Sign Up</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@player) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :bio %>
+      <%= f.text_field :bio %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.submit "Join the Game", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

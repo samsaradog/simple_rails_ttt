@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: game_states
+#
+#  id         :integer          not null, primary key
+#  token      :string(255)
+#  player     :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require "constants"
 
 class GameState < ActiveRecord::Base
