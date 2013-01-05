@@ -27,7 +27,7 @@
 		<%= form_tag("/invite/#{params[:cipher]}") do %>
 		
 			<%= label_tag("user_email", "Email")%>
-			<%= text_field_tag("user_email",nil,:size => "30") %> 
+      <%= text_field_tag("user_email",nil,:size => "30", :required => true) %> 
 			<br />
 			<%= submit_tag("Invite a Friend to Play!", :class => "btn btn-large btn-primary" ) %>
 		

@@ -1,10 +1,24 @@
 ¯<div class="center hero-unit">
   <h2>Welcome to Tic-Tac-Toe!</h2>
 
-	<%= link_to "Please Sign Up", signup_path, 
-		      class: "btn btn-large btn-primary main_button", id: "computer_game" %>
+	<% if signed_in? %>
+	
+		<%= link_to "Play the Computer", computer_game_path, 
+			class: "btn btn-large btn-primary main_button", id: "computer_game" %>
+		<br />
+		<%= link_to "Play another Human", new_two_player_game_path, 
+			class: "btn btn-large btn-primary main_button", id: "human_game" %>
+			
+	<% else %>
+
+		<%= link_to "Please Sign Up", signup_path, 
+		      class: "btn btn-large btn-primary main_button", id: "sign_up" %>
+		<br />
+		<%= link_to "Please Sign In", signin_path, 
+		      class: "btn btn-large btn-primary main_button", id: "sign_in" %>
+		
+	<% end %>
 
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>
-
