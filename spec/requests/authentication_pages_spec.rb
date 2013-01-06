@@ -34,14 +34,13 @@ describe "Authentication" do
         click_button "Sign in"
       end
 
-      it { should have_selector('title', text: player.name) }
       it { should have_link('Profile', href: player_path(player)) }
       it { should have_link('Sign out', href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
       
       describe "followed by signout" do
         before { click_link "Sign out" }
-        it { should have_link('Sign in') }
+        it { should_not have_link('Sign out') }
       end
     end
   end

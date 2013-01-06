@@ -22,7 +22,6 @@ describe "Player pages" do
     before { visit player_path(player) }
 
     it { should have_selector('h1',    text: player.name) }
-    it { should have_selector('title', text: player.name) }
   end
   
   describe "signup" do
