@@ -26,6 +26,21 @@ class Player < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 8 }
   validates :password_confirmation, presence: true
   
+  def mark_as_inactive
+    self.activation_token = SecureRandom.urlsafe_base64
+    self.activation_state = "inactive"
+    self.save
+  end
+  
+  def mark_as_active
+    self.activation_state = "active"
+    self.save
+  end
+  
+  def activated?
+    "active" == self.activation_state
+  end
+  
   private
 
      def create_remember_token

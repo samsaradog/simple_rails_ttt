@@ -6,6 +6,7 @@ TicTacToe::Application.routes.draw do
   match '/signup', to: 'players#signup'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+  match '/players/activate/:id', to: 'players#activate'
 
   scope :controller => :tic_tac_toe do
 #    root to: :home

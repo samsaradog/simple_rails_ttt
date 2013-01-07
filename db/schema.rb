@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130104010959) do
+ActiveRecord::Schema.define(:version => 20130107131931) do
 
   create_table "game_states", :force => true do |t|
     t.string   "token"
@@ -25,11 +25,14 @@ ActiveRecord::Schema.define(:version => 20130104010959) do
     t.string   "email"
     t.string   "bio"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "remember_token"
+    t.string   "activation_state"
+    t.string   "activation_token"
   end
 
+  add_index "players", ["activation_token"], :name => "index_players_on_activation_token"
   add_index "players", ["email"], :name => "index_players_on_email", :unique => true
   add_index "players", ["remember_token"], :name => "index_players_on_remember_token"
 
