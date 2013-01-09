@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130107131931) do
+ActiveRecord::Schema.define(:version => 20130108184727) do
 
   create_table "game_states", :force => true do |t|
     t.string   "token"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(:version => 20130107131931) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "matches", :force => true do |t|
+    t.integer  "cipher"
+    t.integer  "player_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "matches", ["cipher"], :name => "index_matches_on_cipher"
 
   create_table "players", :force => true do |t|
     t.string   "name"

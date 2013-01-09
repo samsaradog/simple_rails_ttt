@@ -2,18 +2,22 @@
 #
 # Table name: players
 #
-#  id              :integer          not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  bio             :string(255)
-#  password_digest :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id               :integer          not null, primary key
+#  name             :string(255)
+#  email            :string(255)
+#  bio              :string(255)
+#  password_digest  :string(255)
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  remember_token   :string(255)
+#  activation_state :string(255)
+#  activation_token :string(255)
 #
 
 class Player < ActiveRecord::Base
   attr_accessible :bio, :email, :name, :password, :password_confirmation
   has_secure_password
+  has_many :matches
   
   before_save { |player| player.email = email.downcase }
   before_save :create_remember_token
@@ -39,6 +43,15 @@ class Player < ActiveRecord::Base
   
   def activated?
     "active" == self.activation_state
+  end
+  
+  def create_match_if_needed(cipher)
+    self.matches.create(cipher: cipher) if 
+                  self.matches.where("cipher = ?", cipher).empty?
+  end
+  
+  def open_matches
+    self.matches.keep_if {|m| m.open? }
   end
   
   private

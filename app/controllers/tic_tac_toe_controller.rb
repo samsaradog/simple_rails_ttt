@@ -1,4 +1,6 @@
 class TicTacToeController < ApplicationController
+  before_filter :signed_in_user, only: [:two_player_game]
+  # before_filter :correct_user,   only: [:two_player_game]
   
   def home
   end
@@ -32,6 +34,7 @@ class TicTacToeController < ApplicationController
   end
   
   def two_player_game
+    current_player.create_match_if_needed(params[:cipher])
     current_record = GameState.find_by_cipher(params[:cipher].to_i)
     
     @player         = Cipher.decode_player(params[:cipher].to_i)
@@ -48,7 +51,6 @@ class TicTacToeController < ApplicationController
   end
   
   def two_player_move
-    puts params.inspect
     current_record = GameState.find_by_cipher(params[:cipher].to_i)
     current_record.move_if_possible!(params[:move])
     create_player_return(current_record)
@@ -63,6 +65,7 @@ class TicTacToeController < ApplicationController
     new_cipher = Cipher.switch_cipher_player(params[:cipher].to_i)
     Invite.tic_tac_toe(params[:user_email],
     "#{request.protocol}#{request.host_with_port}\/#{new_cipher}").deliver
+    flash[:success] = "Invitation delivered"
     redirect_to :back
   end
   
@@ -91,5 +94,16 @@ class TicTacToeController < ApplicationController
     return "Waiting for X move" if "X" == record.player
     return "Waiting for O move" if "O" == record.player
   end
-  
+    
+  def signed_in_user
+    unless signed_in?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
+  end
+
+  def correct_user
+    @player = Player.find(params[:id])
+    redirect_to(root_path) unless current_user?(@user)
+  end
 end

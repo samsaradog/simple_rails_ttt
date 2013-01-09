@@ -161,6 +161,10 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+.user_email {
+	width: 250px;
+}
+
 input {
   height: auto !important;
 }
@@ -177,3 +181,31 @@ input {
   @extend .control-group;
   @extend .error;
  }
+
+/* open matches */
+
+.open_matches {
+  list-style: none;
+  margin: 10px 0 0 0;
+
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+}
+.content {
+  display: block;
+}
+.game_link {
+  color: $grayLight;
+}
+.gravatar {
+  float: left;
+  margin-right: 10px;
+}
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}

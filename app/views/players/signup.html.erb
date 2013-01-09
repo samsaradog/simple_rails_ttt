@@ -6,13 +6,13 @@
       <%= render 'shared/error_messages' %>
 
       <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name, :placeholder => "Please enter your name..." %>
 
       <%= f.label :email %>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, :placeholder => "Please enter your email address..." %>
 
       <%= f.label :bio %>
-      <%= f.text_field :bio %>
+      <%= f.text_field :bio, :placeholder => "Please tell us something about yourself..." %>
 
       <%= f.label :password %>
       <%= f.password_field :password %>

@@ -22,16 +22,18 @@ class PlayersController < ApplicationController
   
   def show
     @player = Player.find(params[:id])
+    @open_matches = @player.open_matches
   end
   
   def activate
     if (@player = Player.find_by_activation_token(params[:id]))
       @player.mark_as_active
-      sign_in @player
-      flash[:success] = "User was successfully activated"
+      flash[:success] = "#{@player.name} was successfully activated"
+      redirect_to signin_path
     else
       flash[:error] = "Activation failed"
+      redirect_to root_path
     end
-    redirect_to root_path
   end
+  
 end
