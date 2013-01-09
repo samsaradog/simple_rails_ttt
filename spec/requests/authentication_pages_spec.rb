@@ -26,8 +26,22 @@ describe "Authentication" do
       end
     end
     
-    describe "with valid information" do
+    describe "with valid information and not activated" do
       let(:player) { FactoryGirl.create(:player) }
+      before do
+        fill_in "Email",    with: player.email
+        fill_in "Password", with: player.password
+        click_button "Sign in"
+      end
+
+      it { should_not have_link('Profile', href: player_path(player)) }
+      it { should_not have_link('Sign out', href: signout_path) }
+      it { should have_link('Home', href: root_path) }
+      
+    end
+    
+    describe "with valid information and activated" do
+      let(:player) { FactoryGirl.create(:player, activation_state: "active") }
       before do
         fill_in "Email",    with: player.email
         fill_in "Password", with: player.password
