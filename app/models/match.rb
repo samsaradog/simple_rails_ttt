@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: matches
+#
+#  id         :integer          not null, primary key
+#  cipher     :integer
+#  player_id  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Match < ActiveRecord::Base
   attr_accessible :cipher
   belongs_to :player

@@ -5,6 +5,21 @@
       <h1> email: <%= @player.email %></h1>
 <br />
       <h1> <%= @player.bio %> </h1>
+<br /><br />
+	<table class="table table-bordered">
+		<tr>
+			<th>Total Games</th>
+			<th>Games Won</th>
+			<th>Games Lost</th>
+			<th>Winning Percentage</th>
+		</tr>
+		<tr>
+			<td><%= @player.scorecard.total_games %></td>
+			<td><%= @player.scorecard.games_won %></td>
+			<td><%= @player.scorecard.games_lost %></td>
+			<td><%= "%05.2f" % @player.scorecard.pct_won %>%</td>
+		</tr>
+	</table>
     </section>
   </aside>
   <div class="span8">
@@ -18,3 +33,17 @@
     </ol>
   </div>
 </div>
+<div class="center">
+	<%= form_tag("/invite/join") do %>
+	
+		<%= label_tag("user_email", "Email")%>
+  <%= text_field_tag("user_email",nil, :required => true,
+                      :placeholder => "Please enter an email address...",
+                      :class => "user_email") %> 
+		<br />
+		<%= submit_tag("Invite a Friend to Join!", :class => "btn btn-large btn-primary" ) %>
+	
+	<% end %>
+	
+</div>
+

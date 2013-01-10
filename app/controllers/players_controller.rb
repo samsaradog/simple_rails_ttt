@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
   def create
     @player = Player.new(params[:player])
     
-    if @player.mark_as_inactive
+    if @player.save_as_inactive
       Invite.activation_needed_email(@player,
               "#{request.protocol}#{request.host_with_port}").deliver
       flash[:success] = "Please check your email for confirmation instructions"
@@ -23,6 +23,10 @@ class PlayersController < ApplicationController
   def show
     @player = Player.find(params[:id])
     @open_matches = @player.open_matches
+  end
+  
+  def leaders
+    @scorecards = Scorecard.order_cards
   end
   
   def activate

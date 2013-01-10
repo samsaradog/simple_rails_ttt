@@ -1,0 +1,17 @@
+¯<div class="center hero-unit">
+  <h2>Tic-Tac-Toe Leader Board</h2>
+
+  <table class="table table-hover table-condensed">
+	<tr>
+		<th>Name</th>
+		<th>Total Games</th>
+		<th>Games Won</th>
+		<th>Games Lost</th>
+		<th>Winning Percentage</th>
+	</tr>
+	<%= render @scorecards %>
+  </table>
+
+</div>
+
+<%= link_to image_tag("rails.png", alt: "Rails"), 'http://rubyonrails.org/' %>

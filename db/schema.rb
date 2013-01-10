@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130108184727) do
+ActiveRecord::Schema.define(:version => 20130110143722) do
+
+  create_table "activation_records", :force => true do |t|
+    t.boolean  "active",     :default => false
+    t.string   "token"
+    t.integer  "player_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "activation_records", ["token"], :name => "index_activation_records_on_token"
 
   create_table "game_states", :force => true do |t|
     t.string   "token"
@@ -34,15 +44,23 @@ ActiveRecord::Schema.define(:version => 20130108184727) do
     t.string   "email"
     t.string   "bio"
     t.string   "password_digest"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "remember_token"
-    t.string   "activation_state"
-    t.string   "activation_token"
   end
 
-  add_index "players", ["activation_token"], :name => "index_players_on_activation_token"
   add_index "players", ["email"], :name => "index_players_on_email", :unique => true
   add_index "players", ["remember_token"], :name => "index_players_on_remember_token"
+
+  create_table "scorecards", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "games_won"
+    t.integer  "games_lost"
+    t.integer  "draw_games"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "scorecards", ["player_id"], :name => "index_scorecards_on_player_id"
 
 end

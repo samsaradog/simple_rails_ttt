@@ -10,6 +10,7 @@
 #
 
 require "constants"
+require "scorekeeper"
 
 class GameState < ActiveRecord::Base
   attr_accessor :game, :cipher_player
@@ -53,9 +54,10 @@ class GameState < ActiveRecord::Base
     return self.id * O_FACTOR if ( O_TOKEN == player )
   end
   
-  def move_if_possible!(move)
+  def move_if_possible!(move,cipher)
     if possible_to_move?(move)
       @game.add_move(@cipher_player,move)
+      Scorekeeper.update_cards(@game.state,cipher)
       self.token = @game.memento
       self.switch_player!
       self.save

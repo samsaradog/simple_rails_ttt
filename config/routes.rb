@@ -3,16 +3,20 @@ TicTacToe::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   
   root to: 'players#home'
-  match '/signup', to: 'players#signup'
-  match '/signin',  to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
-  match '/players/activate/:id', to: 'players#activate'
-
-  scope :controller => :tic_tac_toe do
-#    root to: :home
   
-    match 'computer_game'       => :computer_game, 
-                                   :defaults => { :home_button => true }
+  scope :controller => :sessions do
+      match 'signin'  => :new
+      match 'signout' => :destroy, via: :delete
+  end
+  
+  scope :controller => :players do
+      match 'signup'                  => :signup
+      match '/leaders'                => :leaders
+      match '/players/activate/:id'   => :activate
+  end
+  
+  scope :controller => :tic_tac_toe do
+    match 'computer_game'       => :computer_game
     match 'new_computer_game'   => :new_computer_game
     match 'human_move'          => :human_move
     
@@ -24,6 +28,7 @@ TicTacToe::Application.routes.draw do
     match 'two_player_move'       => :two_player_move
     
     match 'get_update'            => :get_update
+    match 'invite/join'           => :invite_to_join
     match 'invite/:cipher'        => :invite
     
     match ':cipher' => :two_player_game

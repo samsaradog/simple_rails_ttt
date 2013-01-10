@@ -1,5 +1,5 @@
 class TicTacToeController < ApplicationController
-  before_filter :signed_in_user, only: [:two_player_game]
+  before_filter :signed_in_user, only: [:two_player_game, :two_player_move]
   # before_filter :correct_user,   only: [:two_player_game]
   
   def home
@@ -51,8 +51,9 @@ class TicTacToeController < ApplicationController
   end
   
   def two_player_move
-    current_record = GameState.find_by_cipher(params[:cipher].to_i)
-    current_record.move_if_possible!(params[:move])
+    cipher_int = params[:cipher].to_i
+    current_record = GameState.find_by_cipher(cipher_int)
+    current_record.move_if_possible!(params[:move],cipher_int)
     create_player_return(current_record)
   end
   
@@ -65,6 +66,13 @@ class TicTacToeController < ApplicationController
     new_cipher = Cipher.switch_cipher_player(params[:cipher].to_i)
     Invite.tic_tac_toe(params[:user_email],
     "#{request.protocol}#{request.host_with_port}\/#{new_cipher}").deliver
+    flash[:success] = "Invitation delivered"
+    redirect_to :back
+  end
+  
+  def invite_to_join
+    Invite.join(params[:user_email],
+    "#{request.protocol}#{request.host_with_port}\/signup").deliver
     flash[:success] = "Invitation delivered"
     redirect_to :back
   end
