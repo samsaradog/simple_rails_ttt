@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111140156) do
+ActiveRecord::Schema.define(:version => 20130111141813) do
 
   create_table "activation_records", :force => true do |t|
     t.boolean  "active",     :default => false
@@ -31,10 +31,10 @@ ActiveRecord::Schema.define(:version => 20130111140156) do
   end
 
   create_table "matches", :force => true do |t|
-    t.integer  "cipher"
+    t.integer  "cipher",     :limit => 8
     t.integer  "player_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
   end
 
   add_index "matches", ["cipher"], :name => "index_matches_on_cipher"
