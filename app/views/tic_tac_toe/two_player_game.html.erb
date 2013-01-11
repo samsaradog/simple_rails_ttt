@@ -23,17 +23,16 @@
 	<% if ( "X" == @player ) %>
 
 	<br /><br />
-
-		<%= form_tag("/invite/#{params[:cipher]}") do %>
-		
-			<%= label_tag("user_email", "Email")%>
-      <%= text_field_tag("user_email",nil, :required => true,
-                          :placeholder => "Please enter an email address...",
-                          :class => "user_email") %> 
-			<br />
-			<%= submit_tag("Invite a Friend to Play!", :class => "btn btn-large btn-primary" ) %>
-		
-		<% end %>
+	
+	<div class="btn-group btn">
+	  <a class="dropdown-toggle btn-large" data-toggle="dropdown" href="#">
+	    Invite Another Member to Play!
+	    <span class="caret"></span>
+	  </a>
+	  <ul class="dropdown-menu">
+	    <%= render @players %>
+	  </ul>
+	</div>
 		
 	<% end %>
 

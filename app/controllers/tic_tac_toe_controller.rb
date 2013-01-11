@@ -38,7 +38,7 @@ class TicTacToeController < ApplicationController
     current_record = GameState.find_by_cipher(params[:cipher].to_i)
     
     @player         = Cipher.decode_player(params[:cipher].to_i)
-    @home_button    = X_TOKEN == @player
+    @players        = Player.all - [current_player]
     @notification   = create_notification(current_record)
     @representation = current_record.game.representation
   end
@@ -66,14 +66,14 @@ class TicTacToeController < ApplicationController
     new_cipher = Cipher.switch_cipher_player(params[:cipher].to_i)
     Invite.tic_tac_toe(params[:user_email],
     "#{request.protocol}#{request.host_with_port}\/#{new_cipher}").deliver
-    flash[:success] = "Invitation delivered"
+    flash[:success] = "Invitation delivered to #{params[:user_email]} with #{new_cipher}"
     redirect_to :back
   end
   
-  def invite_to_join
+  def join
     Invite.join(params[:user_email],
     "#{request.protocol}#{request.host_with_port}\/signup").deliver
-    flash[:success] = "Invitation delivered"
+    flash[:success] = "Invitation delivered to #{params[:user_email]}"
     redirect_to :back
   end
   

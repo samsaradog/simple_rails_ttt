@@ -28,8 +28,8 @@ TicTacToe::Application.routes.draw do
     match 'two_player_move'       => :two_player_move
     
     match 'get_update'            => :get_update
-    match 'invite/join'           => :invite_to_join
-    match 'invite/:cipher'        => :invite
+    match 'join'                  => :join
+    match 'invite'                => :invite
     
     match ':cipher' => :two_player_game
   end
