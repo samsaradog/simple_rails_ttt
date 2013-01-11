@@ -44,6 +44,8 @@ class Scorecard < ActiveRecord::Base
   end
   
   def pct_won
+    return 0.0 unless (self.total_games > 0)
+    
     (100.0 * self.games_won) / self.total_games
   end
   
