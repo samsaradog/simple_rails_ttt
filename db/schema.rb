@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110143722) do
+ActiveRecord::Schema.define(:version => 20130111140156) do
 
   create_table "activation_records", :force => true do |t|
     t.boolean  "active",     :default => false

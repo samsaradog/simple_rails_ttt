@@ -4,10 +4,10 @@
 	<% if signed_in? %>
 	
 		<%= link_to "Play the Computer", computer_game_path, 
-			class: "btn btn-large btn-primary main_button", id: "computer_game" %>
+			class: "btn btn-large btn-success main_button", id: "computer_game" %>
 		<br />
 		<%= link_to "Play another Human", new_two_player_game_path, 
-			class: "btn btn-large btn-primary main_button", id: "human_game" %>
+			class: "btn btn-large btn-success main_button", id: "human_game" %>
 			
 	<% else %>
 
