@@ -66,7 +66,7 @@ class TicTacToeController < ApplicationController
     new_cipher = Cipher.switch_cipher_player(params[:cipher].to_i)
     Invite.tic_tac_toe(params[:user_email],
     "#{request.protocol}#{request.host_with_port}\/#{new_cipher}").deliver
-    flash[:success] = "Invitation delivered to #{params[:user_email]} with #{new_cipher}"
+    flash[:success] = "Invitation delivered to #{params[:user_email]}"
     redirect_to :back
   end
   
